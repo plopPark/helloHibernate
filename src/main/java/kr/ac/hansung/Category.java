@@ -5,10 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name="category")
 public class Category {
@@ -18,5 +20,15 @@ public class Category {
     private int id;
 
     private String name;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //Lazy와 Eager의 차이 알아야..
+    private Set<Product> products = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }
